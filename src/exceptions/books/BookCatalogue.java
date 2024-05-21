@@ -17,7 +17,9 @@ public class BookCatalogue {
        String titleInput, authorInput,publisherInput;
        int pagesInput;
 
-       try{
+        File file = writeInFiles();
+
+       try(FileWriter fileWriter = new FileWriter(file, true)){
            for (int i = 0; i < books.length; i++) {
                System.out.println("inserisci il titolo del libro " + (i+1));
                titleInput = scanner.nextLine();
@@ -36,12 +38,16 @@ public class BookCatalogue {
                books[i] =  new Book(titleInput, pagesInput, authorInput, publisherInput);
                System.out.println("Libro inserito!\n");
 
+               fileWriter.write( books[i] + System.lineSeparator());
+            //   fileWriter.flush();
            }
-           // non riesco a scrivere immediatamente il file
-           BookCatalogue.writeInFiles(books);
+           // non riesco a scrivere immediatamente il file senza aspettare la fine del loop
+
 
        }catch(IllegalArgumentException e){
           System.out.println(e.getMessage());
+       }catch(IOException e){
+           System.out.println(e.getMessage());
        }
        finally{
            scanner.close();
@@ -52,29 +58,19 @@ public class BookCatalogue {
 
    }
 
-    private static void writeInFiles(Book[] books){
+    private static File writeInFiles() {
 
 
         File path = new File("./resources/data.txt");
-        try{
-            if(!path.exists()){
-                path.createNewFile();
+        try {
+            if (!path.exists()) {
+                 path.createNewFile();
                 // immagino che resource sia nello scaffolding standard
             }
-        }catch(IOException e){
+           return path;
+        } catch (IOException e) {
             System.out.println(e.getMessage());
+            return path;
         }
-
-        try(FileWriter fileWriter = new FileWriter(path, true)){
-
-            for(int i = 0; i < books.length; i++) {
-                System.out.println("ciao");
-                fileWriter.write( books[i].toString() + System.lineSeparator());
-            }
-
-
-        }catch (IOException e){
-            System.out.println(e.getMessage());
-        }
-   }
+    }
 }
