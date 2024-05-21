@@ -1,7 +1,5 @@
 package exceptions.books;
 
-import com.sun.security.jgss.GSSUtil;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,9 +37,8 @@ public class BookCatalogue {
                System.out.println("Libro inserito!\n");
 
                fileWriter.write( books[i] + System.lineSeparator());
-            //   fileWriter.flush();
-           }
-           // non riesco a scrivere immediatamente il file senza aspettare la fine del loop
+
+           }// non riesco a scrivere immediatamente il file senza aspettare la fine del loop
 
 
        }catch(IllegalArgumentException e){
@@ -55,6 +52,16 @@ public class BookCatalogue {
 
 
 
+       try {
+       Scanner reader = new Scanner(file);
+
+       while(reader.hasNextLine()){
+           String row = reader.nextLine();
+           System.out.println(row);
+       }
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
 
    }
 
