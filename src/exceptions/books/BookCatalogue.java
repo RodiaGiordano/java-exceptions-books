@@ -37,6 +37,7 @@ public class BookCatalogue {
                System.out.println("Libro inserito!\n");
 
                fileWriter.write( books[i] + System.lineSeparator());
+               fileWriter.flush();
 
            }// non riesco a scrivere immediatamente il file senza aspettare la fine del loop
 
@@ -52,8 +53,8 @@ public class BookCatalogue {
 
 
 
-       try {
-       Scanner reader = new Scanner(file);
+       try(Scanner reader = new Scanner(file);) {
+
 
        while(reader.hasNextLine()){
            String row = reader.nextLine();
