@@ -36,11 +36,9 @@ public class BookCatalogue {
                books[i] =  new Book(titleInput, pagesInput, authorInput, publisherInput);
                System.out.println("Libro inserito!\n");
 
-               BookCatalogue.writeInFiles(books[i].toString());
-
-
            }
-
+           // non riesco a scrivere immediatamente il file
+           BookCatalogue.writeInFiles(books);
 
        }catch(IllegalArgumentException e){
           System.out.println(e.getMessage());
@@ -53,8 +51,8 @@ public class BookCatalogue {
 
 
    }
-   // scrivere immediatamente il file senza aspettare il termine del ciclo for
-    private static void writeInFiles(String row){
+
+    private static void writeInFiles(Book[] books){
 
 
         File path = new File("./resources/data.txt");
@@ -69,8 +67,11 @@ public class BookCatalogue {
 
         try(FileWriter fileWriter = new FileWriter(path, true)){
 
-            fileWriter.write(row + System.lineSeparator());
-            fileWriter.flush();
+            for(int i = 0; i < books.length; i++) {
+                System.out.println("ciao");
+                fileWriter.write( books[i].toString() + System.lineSeparator());
+            }
+
 
         }catch (IOException e){
             System.out.println(e.getMessage());
